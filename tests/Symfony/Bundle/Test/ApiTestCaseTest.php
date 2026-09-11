@@ -425,6 +425,23 @@ JSON
         $this->assertSame('application/json', $client->getKernelBrowser()->getRequest()->headers->get('Content-Type'));
     }
 
+    public function testBrowserKitAssertionsStayVerboseByDefault(): void
+    {
+        // The trait's static property is flattened into ApiTestCase (which directly uses the assertions trait)
+        // and shared with subclasses, so read it there rather than on the trait or this subclass.
+        $verboseMode = new \ReflectionProperty(ApiTestCase::class, 'defaultVerboseMode');
+
+        // Simulate the Symfony >= 8.2 default (non-verbose) or a previous test that opted out.
+        self::setBrowserKitAssertionsAsVerbose(false);
+        fwrite(\STDOUT, \sprintf("[issue-8450] before ApiTestCase before-hook: defaultVerboseMode = %s\n", var_export($verboseMode->getValue(), true)));
+
+        // Re-run the exact before-hook ApiTestCase registers; reverting the fix removes it and this test fails.
+        $this->keepBrowserKitAssertionsVerbose();
+
+        fwrite(\STDOUT, \sprintf("[issue-8450] after ApiTestCase before-hook:  defaultVerboseMode = %s\n", var_export($verboseMode->getValue(), true)));
+        $this->assertTrue($verboseMode->getValue(), 'ApiTestCase must keep BrowserKit assertions verbose so failing API tests still show the response body.');
+    }
+
     public function testDoNotRebootKernelOnCreateClient(): void
     {
         self::$alwaysBootKernel = false;
