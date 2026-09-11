@@ -375,6 +375,7 @@ jobs:
           - api-platform/openapi
           - api-platform/graphql
           - api-platform/http-cache
+          - api-platform/mcp
           - api-platform/ramsey-uuid
           - api-platform/serializer
           - api-platform/state
