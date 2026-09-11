@@ -40,6 +40,10 @@ parameters:
 		ApiPlatform\Metadata\Resource\ResourceMetadataCollection:
 			- handleNotFound
 	ignoreErrors:
+		# BC shims for the test helpers moved to api-platform/test in 5.0
+		-
+			identifier: trait.unused
+			path: src/Symfony/Bundle/Test/*
 		# ignore type todo remove in 5.0
 		-
 			message: '#Symfony\\Component\\PropertyInfo\\Type#'
@@ -84,8 +88,6 @@ parameters:
 		# Expected, due to backward compatibility
 		- '#Access to an undefined property GraphQL\\Type\\Definition\\NamedType&GraphQL\\Type\\Definition\\Type::\$name\.#'
 		- "#Call to function method_exists\\(\\) with 'Symfony\\\\\\\\Component\\\\\\\\PropertyInfo\\\\\\\\PropertyInfoExtractor' and 'getType' will always evaluate to true\\.#"
-		- "#Call to function method_exists\\(\\) with 'Symfony\\\\\\\\Component\\\\\\\\HttpFoundation\\\\\\\\Request' and 'getContentTypeFormat' will always evaluate to true\\.#"
-		- '#Call to an undefined method Symfony\\Component\\HttpFoundation\\Request::getContentType\(\)\.#'
 		- "#Call to function method_exists\\(\\) with 'Symfony\\\\\\\\Component\\\\\\\\Serializer\\\\\\\\Serializer' and 'getSupportedTypes' will always evaluate to true\\.#"
 		- "#Call to function method_exists\\(\\) with Doctrine\\\\ODM\\\\MongoDB\\\\Mapping\\\\ClassMetadata\\|Doctrine\\\\ORM\\\\Mapping\\\\ClassMetadata and 'isChangeTrackingDef…' will always evaluate to true\\.#"
 		- "#Call to function method_exists\\(\\) with Symfony\\\\Component\\\\Serializer\\\\Exception\\\\PartialDenormalizationException and 'getNotNormalizableV…' will always evaluate to true\\.#"
