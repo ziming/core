@@ -26,8 +26,8 @@
     ],
     "require": {
         "php": ">=8.2",
-        "api-platform/json-schema": "^5.0@alpha",
-        "api-platform/metadata": "^5.0@alpha",
+        "api-platform/json-schema": "^5.0@beta",
+        "api-platform/metadata": "^5.0@beta",
         "phpunit/phpunit": "^11.5 || ^12.2",
         "symfony/browser-kit": "^7.4 || ^8.0",
         "symfony/framework-bundle": "^7.4 || ^8.0",
