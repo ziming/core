@@ -39,7 +39,7 @@ class ErrorTest extends ApiTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(400);
-        $this->assertResponseHeaderSame('content-type', 'application/vnd.api+json; charset=utf-8');
+        $this->assertResponseHeaderSame('content-type', 'application/vnd.api+json');
         $this->assertJsonContains([
             'errors' => [
                 [
@@ -87,7 +87,7 @@ class ErrorTest extends ApiTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(400);
-        $this->assertResponseHeaderSame('content-type', 'application/vnd.api+json; charset=utf-8');
+        $this->assertResponseHeaderSame('content-type', 'application/vnd.api+json');
         $body = $response->toArray(false);
         $this->assertSame('An error occurred', $body['errors'][0]['title']);
         $this->assertSame('400', $body['errors'][0]['status']);
@@ -106,7 +106,7 @@ class ErrorTest extends ApiTestCase
         ]);
 
         $this->assertResponseStatusCodeSame(404);
-        $this->assertResponseHeaderSame('content-type', 'application/vnd.api+json; charset=utf-8');
+        $this->assertResponseHeaderSame('content-type', 'application/vnd.api+json');
         $body = $response->toArray(false);
         $this->assertSame('An error occurred', $body['errors'][0]['title']);
         $this->assertSame('404', $body['errors'][0]['status']);
