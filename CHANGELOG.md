@@ -1,14 +1,43 @@
 # Changelog
 
-## v5.0.0-alpha.4
+## v5.0.0-beta.1
 
 ### Breaking changes
 
 * JSON:API: `use_iri_as_id` now defaults to `false` instead of resolving to `true` with a deprecation, as announced in #8327. The `data.id` member carries the resource identifier and the IRI moves to `data.links.self`. Set `api_platform.jsonapi.use_iri_as_id` to `true` (Symfony) or `'jsonapi' => ['use_iri_as_id' => true]` in `config/api-platform.php` (Laravel) to keep the previous payload.
 * `ApiPlatform\State\Provider\DeserializeProvider` no longer accepts a `Symfony\Contracts\Translation\TranslatorInterface` as its fourth constructor argument, as announced by the deprecation added in 4.4. Denormalization violations and their translation are handled by `DenormalizationViolationFactoryInterface`, which moves from the fifth to the fourth position. Anyone constructing the provider by hand, or overriding the `api_platform.state_provider.deserialize` service definition, must drop the translator argument. `api-platform/state` no longer requires `symfony/translation-contracts`.
+* [906a36dca](https://github.com/api-platform/core/commit/906a36dca9b1a1e8e48fc7990c187331b72b370e) feat!: drop the `Request::getContentType()` fallbacks (#8517)
+
+### Features
+
+* [24871a9ac](https://github.com/api-platform/core/commit/24871a9ac05468cf864de6771ebceceb720fb273) feat(symfony): emit a csp nonce on the swagger ui and graphiql scripts (#8310)
+* [56c4ae204](https://github.com/api-platform/core/commit/56c4ae2040be32a42b8b42aec976697f0d82941d) feat(symfony): add routePriority to control route matching order (#8309)
+* [56daf41c4](https://github.com/api-platform/core/commit/56daf41c4de9e737f2374a2696f6016425958dad) feat: allow Parameter attributes on properties (#7870)
+* [711f00657](https://github.com/api-platform/core/commit/711f006577c2f60fa2c71755f1f27825bf9722ce) feat: extract ApiTestCase in its own api-platform/test package (#7887)
+* [826e847b6](https://github.com/api-platform/core/commit/826e847b6d1ee607f2f671d0a03d8f8ec0daa429) feat(metadata): resolve %param% in yaml/xml and attribute resource config (#8284)
+* [a8af8e1b9](https://github.com/api-platform/core/commit/a8af8e1b97601d94f10f8dfa057e827e5611c0d9) feat(doctrine): embed joined/sti relations when a discriminator subclass declares the group (#8283)
+* [c3b6bb41f](https://github.com/api-platform/core/commit/c3b6bb41f0afe6988356e5c5099f60e0524c7d96) feat: allow restricting operations for parameter attributes on properties (#7899)
+* [edead1f0c](https://github.com/api-platform/core/commit/edead1f0cd2375604d9929f16a005954d94b3a17) feat: HTTP QUERY method support (RFC 10008) (#8349)
+* [fce2bdfe6](https://github.com/api-platform/core/commit/fce2bdfe6a55c117014337c5339a98c6401609d4) feat(state): apply uri variable provider values (#8491)
+
+### Bug fixes
+
+* [239e44c44](https://github.com/api-platform/core/commit/239e44c44a6db7a399af463f4ff217483e75cc5b) fix(symfony): make api-platform/test a dev dependency (#8527)
+* [5ad54c9d9](https://github.com/api-platform/core/commit/5ad54c9d9803b124bc34af16553fa9eca0503dc9) fix(symfony): separate route priority (#8529)
+* [7afb7c8a7](https://github.com/api-platform/core/commit/7afb7c8a760b54324c49fa780be7320cc119d392) fix(test): restore main CI after the ApiTestCase extraction (#8526)
+* [88f98d961](https://github.com/api-platform/core/commit/88f98d9616f8fdbebd8308086c666882289f0959) fix(serializer): read Symfony attributes through their public properties (#8519)
+
+### Dependencies
+
+* The components now require each other with a `@beta` stability flag (for example `"api-platform/state": "^5.0@beta"`) instead of `@alpha`. Installing a 5.0 component no longer pulls a 5.0 alpha of its siblings.
+* `api-platform/test` is published for the first time: `ApiTestCase` moves out of `api-platform/symfony` into its own package (#7887), required as a dev dependency (#8527).
+
 ### Notes
 
 * The internal `ApiPlatform\Symfony\Bundle\ArgumentResolver\CompatibleValueResolverInterface` is removed. It aliased either `ValueResolverInterface` or the Symfony 6 `ArgumentValueResolverInterface` depending on which existed; since the Symfony floor is `^7.4`, only the former can be installed, and Symfony 8 dropped the latter altogether. `PayloadArgumentResolver` now implements `ValueResolverInterface` directly.
+* `FilterInterface::getDescription()` removal is deferred to 6.0 (#8513); it stays deprecated in 5.0.
+
+Also contains [v4.4.0-beta.1 changes](#v440-beta1).
 
 ## v5.0.0-alpha.3
 
